@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router/router'
 import iView from 'iview'
 import store from './store'
+import './lib/httpInterceptor'
+import './lib/jquery-vender.js'
+import './lib/http'
 
 // js文件
 import 'bootstrap/dist/js/bootstrap.min'
