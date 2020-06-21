@@ -2,7 +2,7 @@
     <div class="tab-header">
         <div class="inner">
             <div class="pull-left">
-                <div class="pull-left">Hi~Welcome to<span class="cr" onclick="location.href='/'"> Xinyu Mall</span></div>
+                <div class="pull-left">Hi~Welcome to<span class="cr" onclick="location.href='/'"> XMall</span></div>
             </div>
             <div class="pull-right">
                 <router-link to="/login" v-if="!username"><span class="cr" v-text="'Login'"></span></router-link>

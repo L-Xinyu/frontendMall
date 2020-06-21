@@ -5,7 +5,7 @@
             <div class="copy-box clearfix">
                 <!-- copyright -->
                 <p class="copyright">
-                    Copyright © 2020 xyMall All Rights Reserved | Welcome to the mall
+                    Copyright © 2020 XMall All Rights Reserved | Welcome to the XMall
                 </p>
             </div>
         </div>

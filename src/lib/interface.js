@@ -19,4 +19,6 @@ export const cartCount = (data) => post(url + "api/mall.init", data);
 export const category = (data) => get(url + "api/category", data);
 //Index banner
 export const banner = (data) => get(url + "api/index/getRotationChart", data);
+//Index recommend
+export const goodsRecommend = (data) => get(url + "api/index/cagegoryGoodsRecommend", data);
 

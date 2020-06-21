@@ -52,13 +52,37 @@
             </div>
             <div class="swiper-pagination"></div>
         </div>
+        <div class="content inner" style="margin-bottom: 40px;">
+            <section v-for="(v,k) in goodsInfo" :class="[k % 2 == 0?'floor-2':'floor-3','scroll-floor']">
+                <div class="floor-title">
+                    <i class="iconfont icon-skirt fz16"></i><span v-text="v.categorys.name"></span>
+                    <div class="case-list fz0 pull-right">
+                        <a v-for="(v1,k1) in v.categorys.list" v-text="v1.name"></a>
+                    </div>
+                </div>
+                <div class="con-box">
+                    <div class="right-box">
+                        <router-link :to="'/detail?id='+v1.id" class="floor-item" v-for="(v1,k1) in v.goods">
+                            <div class="item-img hot-img">
+                                <img :src="v1.image" class="cover">
+                            </div>
+                            <div class="price clearfix">
+                                <span class="pull-left cr fz16" v-text="'€'+v1.price"></span>
+                                <span class="pull-right c6">Price</span>
+                            </div>
+                            <div class="name ep" v-text="v1.title"></div>
+                        </router-link>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 </template>
 
 <script>
     import header_ from '../components/header_'
     import search from '../components/search'
-    import {category, banner} from "../lib/interface";
+    import {category, banner, goodsRecommend} from "../lib/interface";
 
     export default {
         components: {header_, search},
@@ -68,6 +92,7 @@
                 categoryInfo: [],
                 bannerInfo: [],
                 isShow: 0,
+                goodsInfo: [],
             }
         },
         mounted() {
@@ -92,6 +117,7 @@
             });
             this.getCategoryInfo();
             this.getBannerInfo();
+            this.getGoodsInfo();
         },
         methods: {
             category(id) {
@@ -106,7 +132,12 @@
                 let result = await banner();
                 this.bannerInfo = result.result;
             },
+            async getGoodsInfo() {
+                let result = await goodsRecommend();
+                this.goodsInfo = result.result;
+                console.log(result);
             }
+        }
     }
 </script>
 
