@@ -11,6 +11,10 @@ const url = process.env.NODE_ENV === 'production'
 
 
 
+//Send SmsCode
+export const smscode = (data) => post(url + "api/smscode", data);
+//Login
+export const login = (data) => post(url + "api/login", data);
 //Logout api
 export const logout = (data) => get(url + "api/logout", data);
 //Count ShoppingCart api

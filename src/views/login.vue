@@ -75,8 +75,85 @@
             </div>
         </div>
 
+        <footer_></footer_>
     </div>
 </template>
+
+<script>
+    import lvaild from '../lib/lvalid'
+    import footer_ from '../components/footer_'
+    import {smscode, login} from "../lib/interface";
+
+    export default {
+        name: "login",
+        components: {footer_},
+        data() {
+            return {
+                sendDisabled: false,
+                sendText: "Send SmsCode",
+                phone: "",
+                code: "",
+                url: "",
+            }
+        },
+        mounted() {
+            this.url = decodeURIComponent(this.$route.query.redirect);
+        },
+        methods: {
+            //Send SMSCode
+            async sendCode() {
+                var that = this;
+                if (this.phone === "" || !lvaild.checkMobile(this.phone)) {
+                    this.$Message.error('Please enter the correct phone number!');
+                    return;
+                }
+                let result = await smscode({"phone_number": this.phone});
+                if (result.status === 0) {
+                    this.$Message.error(result.message);
+                    return;
+                } else {
+                    this.$Message.success(result.message);
+                    let timerNum = 60;
+                    this.sendDisabled = true;
+                    let timer = setInterval(function () {
+                        if (timerNum <= 0) {
+                            that.sendText = "Send SmsCode";
+                            clearInterval(timer);
+                            that.sendDisabled = false;
+                        } else {
+                            that.sendText = timerNum + "s retrieve code";
+                            timerNum--;
+                        }
+                    }, 1000);
+                }
+            },
+            async login() {
+                if (this.phone === "") {
+                    this.$Message.error('Please enter the correct phone number!');
+                    return;
+                }
+                if (this.code === "") {
+                    this.$Message.error('Please enter the SMS code!');
+                    return;
+                }
+                let result = await login({"phone_number": this.phone, "code": this.code, "type": 2});
+                if (result.status === 1) {
+                    localStorage.setItem("token", result.result.token);
+                    localStorage.setItem("username", result.result.username);
+                    if (this.url === "undefined") {
+                        this.$router.replace("/");
+                    } else {
+                        this.$router.replace(this.url);
+                    }
+                } else {
+                    this.$Message.error(result.message);
+                    return;
+                }
+                console.log(result);
+            }
+        }
+    }
+</script>
 
 <style scoped>
     .con {
@@ -171,6 +248,23 @@
         margin-bottom: 10px;
     }
 
+    .footer-login {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-top: 200px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .links {
+        margin-top: 10px;
+        display: -webkit-flex;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+
     .links li {
         color: #333;
         min-width: 80px;
@@ -178,4 +272,9 @@
         margin: 10px 20px 0;
     }
 
+    .copyright {
+        color: #666;
+        text-align: center;
+        line-height: 2em;
+    }
 </style>
