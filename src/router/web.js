@@ -18,4 +18,14 @@ export default [
         },
         component: () => import('../views/index.vue'),
     },
+    {
+        //分类商品
+        path: '/category',
+        name: 'category',
+        meta: {
+            title: '分类商品',
+            // auth: 'login'
+        },
+        component: () => import('../views/category.vue'),
+    },
 ]

@@ -25,4 +25,8 @@ export const category = (data) => get(url + "api/category", data);
 export const banner = (data) => get(url + "api/index/getRotationChart", data);
 //Index recommend
 export const goodsRecommend = (data) => get(url + "api/index/cagegoryGoodsRecommend", data);
+//Category classification list
+export const categorySearch = (data) => get(url + "api/category/search/" + data.id);
+//Category and goods list
+export const lists = (data) => get(url + "api/lists", data);
 
