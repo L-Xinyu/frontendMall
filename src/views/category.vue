@@ -44,6 +44,7 @@
                                     <small>€</small>
                                     {{v.price}}
                                 </div>
+                                <div class="sale"><a @click="addCart(v.id)">Add Cart</a></div>
                             </div>
                             <div class="buttom">
                                 <div>Sales count <b v-text="v.sales_count"></b></div>
@@ -74,7 +75,7 @@
     import header_ from '../components/header_'
     import search from '../components/search'
     import footer_ from '../components/footer_'
-    import {categorySearch, lists} from "../lib/interface";
+    import {categorySearch, lists, addCart} from "../lib/interface";
 
     export default {
         name: "category",
@@ -236,6 +237,17 @@
                 this.result = result.result.list;
                 this.total = result.result.count;
             },
+            async addCart(id) {
+                var token = localStorage.getItem("token");
+                if (token === undefined || token === null) {
+                    this.$router.replace({
+                        name: "login",
+                        query: {redirect: this.$route.fullPath}
+                    })
+                }
+                let result = await addCart({"id": id});
+                this.$Message.success(result.message);
+            }
         }
     }
 </script>

@@ -29,4 +29,6 @@ export const goodsRecommend = (data) => get(url + "api/index/cagegoryGoodsRecomm
 export const categorySearch = (data) => get(url + "api/category/search/" + data.id);
 //Category and goods list
 export const lists = (data) => get(url + "api/lists", data);
+//Add Shopping Cart
+export const addCart = (data) => post(url + "api/cart/add", data);
 
