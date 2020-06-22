@@ -14,18 +14,27 @@ export default [
         name: 'index',
         meta: {
             title: 'Index',
-            // auth: 'login'
         },
         component: () => import('../views/index.vue'),
     },
     {
-        //分类商品
+        //Category
         path: '/category',
         name: 'category',
         meta: {
-            title: '分类商品',
+            title: 'Category',
             // auth: 'login'
         },
         component: () => import('../views/category.vue'),
     },
+    {
+        //Goods Details
+        path: '/detail',
+        name: 'detail',
+        meta: {
+            title: 'Good Detail',
+            // auth: 'login'
+        },
+        component: () => import('../views/detail.vue'),
+    }
 ]

@@ -31,4 +31,6 @@ export const categorySearch = (data) => get(url + "api/category/search/" + data.
 export const lists = (data) => get(url + "api/lists", data);
 //Add Shopping Cart
 export const addCart = (data) => post(url + "api/cart/add", data);
+//Good Detail
+export const detail = (data) => get(url + "api/detail/" + data.id);
 
