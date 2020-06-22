@@ -36,5 +36,15 @@ export default [
             // auth: 'login'
         },
         component: () => import('../views/detail.vue'),
-    }
+    },
+    {
+        //Cart
+        path: '/cart',
+        name: 'cart',
+        meta: {
+            title: 'Cart',
+            auth: 'login'
+        },
+        component: () => import('../views/cart.vue'),
+    },
 ]
