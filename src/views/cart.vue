@@ -34,12 +34,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="v in list">
+                            <tr v-for="(v,k) in list">
                                 <th scope="row">
                                     <label class="checked-label">
-                                        <Checkbox :value="v.isCheck"></Checkbox>
+                                        <Checkbox :value="v.isCheck" @click.prevent.native="chooseCheck(k)"></Checkbox>
                                         <i></i>
-                                        <div class="img"><img :src="v.image" style="width: 100px;height: 100px;" alt="" class="cover">
+                                        <div class="img">
+                                            <img :src="v.image" style="width: 100px;height: 100px;" alt="" class="cover">
                                         </div>
                                     </label>
                                 </th>
@@ -56,7 +57,7 @@
                                     </div>
                                 </td>
                                 <td>€<span v-text="(v.price*v.num).toFixed(2)"></span></td>
-                                <td>Delete</td>
+                                <td><a @click="del(k)">Delete</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -81,7 +82,7 @@
 <script>
     import header_ from '../components/header_'
     import footer_ from '../components/footer_'
-    import {cartList} from "../lib/interface";
+    import {cartList, deleteCart} from "../lib/interface";
 
     export default {
         components: {header_, footer_},
@@ -106,6 +107,32 @@
                 this.list = result.result;
                 for (var i = 0; i < this.list.length; i++) {
                     this.list[i].isCheck = false;
+                }
+            },
+            chooseCheck(index) {
+                if (this.list[index].isCheck === false) {
+                    this.list[index].isCheck = true;
+                } else {
+                    this.list[index].isCheck = false;
+                }
+                this.checkIsAll();
+            },
+            checkIsAll() {
+                var checkAll = true;
+                for (var i = 0; i < this.list.length; i++) {
+                    if (this.list[i].isCheck === false) {
+                        checkAll = false;
+                        break;
+                    }
+                }
+                this.checkAll = checkAll;
+            },
+            async del(k) {
+                let id = this.list[k].id;
+                let result = await deleteCart({"id": id});
+                this.$Message.success(result.message);
+                if (result.code === 1) {
+                    this.list.splice(k, 1);
                 }
             },
         }

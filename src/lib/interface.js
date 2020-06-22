@@ -35,4 +35,6 @@ export const addCart = (data) => post(url + "api/cart/add", data);
 export const detail = (data) => get(url + "api/detail/" + data.id);
 //ShoppingCart list
 export const cartList = (data) => get(url + "api/cart/lists", data);
+//Delete Cart goods
+export const deleteCart = (data) => post(url + "api/cart/delete", data);
 
