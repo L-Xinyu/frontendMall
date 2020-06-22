@@ -61,6 +61,30 @@
                             </li>
                         </ul>
                         <div class="item-key">
+                            <div class="item-sku">
+                                <dl class="item-prop clearfix" v-for="(v,k) in result.sku">
+                                    <dt class="item-metatit"><span v-text="v.name"></span>：</dt>
+                                    <dd>
+                                        <ul :data-property="v.name" class="clearfix">
+                                            <li v-for="(v1,k1) in v.list">
+                                                <a @click="chooseSku(k,k1)" v-if="v1.flag === 1" :class="'sku on sku_'+k"
+                                                   :id="'sku_'+k+'_'+k1"
+                                                   role="button"
+                                                   :data-value="v1.id"
+                                                   aria-disabled="true">
+                                                    <span v-text="v1.name"></span>
+                                                </a>
+                                                <a @click="chooseSku(k,k1)" v-if="v1.flag === 0" :class="'sku sku_'+k"
+                                                   :id="'sku_'+k+'_'+k1"
+                                                   role="button" :data-value="v1.id"
+                                                   aria-disabled="true">
+                                                    <span v-text="v1.name"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
                             <div class="item-amount clearfix bgf5">
                                 <div class="item-metatit">Quantity：</div>
                                 <div class="amount-box">
@@ -210,7 +234,7 @@
                     }
                     $('.amount-input').val(num + 1);
                 } else if ($(this).hasClass('sub')) {
-                    if (num == 1) {
+                    if (num === 1) {
                         return DJMask.open({
                             width: "300px",
                             height: "100px",
@@ -230,6 +254,25 @@
                     return;
                 }
                 this.firstImg = this.result.image[0];
+            },
+            async chooseSku(k, k1) {
+                $(".sku_" + k).removeClass("on");
+                $("#sku_" + k + "_" + k1).addClass("on");
+                var ids = "";
+                $(".sku").each(function (item) {
+                    if ($(this).hasClass("on")) {
+                        ids += $(this).attr("data-value") + ",";
+                    }
+                });
+                ids = ids.substr(0, ids.length - 1);
+                var id = 0;
+                for (k in this.result.gids) {
+                    if (k === ids) {
+                        id = this.result.gids[k];
+                    }
+                }
+                this.id = id;
+                this.getResult();
             },
             async addCart() {
                 var token = localStorage.getItem("token");
