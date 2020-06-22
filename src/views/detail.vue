@@ -123,8 +123,12 @@
                             <div class="item-detail__info clearfix">
                                 <div class="record">Product Name：<span v-text="result.title"></span>
                                 </div>
-                                <div class="record">Product Code：</div>
-                                <div class="record">Added time：</div>
+                                <div class="record">Product Code：<span v-if="result && result.detail"
+                                                                       v-text="result.detail.d1.Goods_Code"></span>
+                                </div>
+                                <div class="record">Added time：<span v-if="result && result.detail"
+                                                               v-text="result.detail.d1.Added_time"></span>
+                                </div>
                                 <div class="record">Product stock：<span v-text="result.stock"></span>
                                 </div>
                             </div>
@@ -148,7 +152,7 @@
     import header_ from '../components/header_'
     import search from '../components/search'
     import footer_ from '../components/footer_'
-    import {detail} from "../lib/interface";
+    import {detail, addCart} from "../lib/interface";
 
     export default {
         components: {header_, search, footer_},
@@ -226,6 +230,24 @@
                     return;
                 }
                 this.firstImg = this.result.image[0];
+            },
+            async addCart() {
+                var token = localStorage.getItem("token");
+                if (token === undefined || token === null) {
+                    this.$router.replace({
+                        name: "login",
+                        query: {redirect: this.$route.fullPath}
+                    });
+                    return;
+                }
+                var num = parseInt($('.amount-input').val());
+                if (num > this.result.stock) {
+                    this.$Message.error("Maximum stock exceeded!");
+                    $('.amount-input').val(0);
+                    return;
+                }
+                let result = await addCart({"id": this.id, "num": num});
+                this.$Message.success(result.message);
             },
             changeImg(img) {
                 this.firstImg = img;
