@@ -100,6 +100,7 @@
             $('.to-top').toTop({position: false});
             // 个数限制输入数字
             $('input.val').onlyReg({reg: /[^0-9.]/g});
+            this.getTotalSum();
             this.getResult();
         },
         methods: {
@@ -116,8 +117,9 @@
                 } else {
                     this.list[index].isCheck = false;
                 }
-                this.checkIsAll();
+                this.getTotalSum();
                 this.getTotalCount();
+                this.checkIsAll();
             },
             handleCheckAll() {
                 if (this.checkAll) {
@@ -131,6 +133,7 @@
                         this.list[i].isCheck = true
                     }
                 }
+                this.getTotalSum();
                 this.getTotalCount();
             },
             checkIsAll() {
@@ -150,6 +153,7 @@
                 if (result.code === 1) {
                     this.list.splice(k, 1);
                     this.getTotalCount();
+                    this.getTotalSum();
                 }
             },
             async changeNum(index, t) {
@@ -164,6 +168,7 @@
                 }
                 let result = await updateCart({"id": this.list[index].id, "num": num});
                 if (result.status === 1) {
+                    this.getTotalSum();
                     this.getTotalCount();
                     if (t === 1) { //+
                         this.list[index].num = this.list[index].num - 1;
@@ -182,7 +187,17 @@
                     }
                 }
                 console.log(this.totalCount);
-            }
+            },
+            getTotalSum() {
+                this.totalPrice = 0.00;
+                for (var i = 0; i < this.list.length; i++) {
+                    if (this.list[i].isCheck === true) {
+                        this.totalPrice += this.list[i].price * this.list[i].num
+                    }
+                }
+                this.totalPrice = this.totalPrice.toFixed(2);
+                console.log(this.totalPrice);
+            },
         }
     }
 </script>
