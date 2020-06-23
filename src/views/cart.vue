@@ -51,9 +51,9 @@
                                 <td>€<span v-text="v.price"></span></td>
                                 <td>
                                     <div class="cart-num__box">
-                                        <input type="button" class="sub" value="-">
+                                        <input type="button" class="sub" value="-" @click="changeNum(k,1)">
                                         <input type="text" class="val" :value="v.num" disabled="true" maxlength="2">
-                                        <input type="button" class="add" value="+">
+                                        <input type="button" class="add" value="+" @click="changeNum(k,2)">
                                     </div>
                                 </td>
                                 <td>€<span v-text="(v.price*v.num).toFixed(2)"></span></td>
@@ -82,7 +82,7 @@
 <script>
     import header_ from '../components/header_'
     import footer_ from '../components/footer_'
-    import {cartList, deleteCart} from "../lib/interface";
+    import {cartList, deleteCart, updateCart} from "../lib/interface";
 
     export default {
         components: {header_, footer_},
@@ -133,6 +133,27 @@
                 this.$Message.success(result.message);
                 if (result.code === 1) {
                     this.list.splice(k, 1);
+                }
+            },
+            async changeNum(index, t) {
+                var num = 0;
+                if (t === 1) { //+
+                    if (this.list[index].num === 1) {
+                        return;
+                    }
+                    num = this.list[index].num - 1;
+                } else { // -
+                    num = this.list[index].num + 1;
+                }
+                let result = await updateCart({"id": this.list[index].id, "num": num});
+                if (result.status === 1) {
+                    if (t === 1) { //+
+                        this.list[index].num = this.list[index].num - 1;
+                    } else { // -
+                        this.list[index].num = this.list[index].num + 1;
+                    }
+                } else {
+                    this.$Message.error(result.message);
                 }
             },
         }
