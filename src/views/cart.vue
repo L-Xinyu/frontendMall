@@ -22,7 +22,8 @@
                             <tr>
                                 <th width="150">
                                     <label class="checked-label">
-                                        <Checkbox :value="checkAll">Check All
+                                        <Checkbox :value="checkAll" @click.prevent.native="handleCheckAll">
+                                            Check All
                                         </Checkbox>
                                     </label>
                                 </th>
@@ -66,7 +67,7 @@
                         </div>
                         <div class="checkbox shopcart-total">
                             <div class="pull-right">
-                                Selected products <span v-text="totalCount"></span>
+                                Selected <span v-text="totalCount"></span> products
                                 &nbsp;&nbsp;&nbsp;Total
                                 <b class="cr">€<span class="fz24" v-text="totalPrice"></span></b>
                             </div>
@@ -116,6 +117,21 @@
                     this.list[index].isCheck = false;
                 }
                 this.checkIsAll();
+                this.getTotalCount();
+            },
+            handleCheckAll() {
+                if (this.checkAll) {
+                    this.checkAll = false;
+                    for (var i = 0; i < this.list.length; i++) {
+                        this.list[i].isCheck = false
+                    }
+                } else {
+                    this.checkAll = true;
+                    for (var i = 0; i < this.list.length; i++) {
+                        this.list[i].isCheck = true
+                    }
+                }
+                this.getTotalCount();
             },
             checkIsAll() {
                 var checkAll = true;
@@ -133,6 +149,7 @@
                 this.$Message.success(result.message);
                 if (result.code === 1) {
                     this.list.splice(k, 1);
+                    this.getTotalCount();
                 }
             },
             async changeNum(index, t) {
@@ -147,6 +164,7 @@
                 }
                 let result = await updateCart({"id": this.list[index].id, "num": num});
                 if (result.status === 1) {
+                    this.getTotalCount();
                     if (t === 1) { //+
                         this.list[index].num = this.list[index].num - 1;
                     } else { // -
@@ -156,6 +174,15 @@
                     this.$Message.error(result.message);
                 }
             },
+            getTotalCount() {
+                this.totalCount = 0;
+                for (var i = 0; i < this.list.length; i++) {
+                    if (this.list[i].isCheck === true) {
+                        this.totalCount += parseFloat(this.list[i].num);
+                    }
+                }
+                console.log(this.totalCount);
+            }
         }
     }
 </script>
