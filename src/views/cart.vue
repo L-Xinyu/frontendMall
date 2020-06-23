@@ -63,7 +63,7 @@
                             </tbody>
                         </table>
                         <div class="user-form-group tags-box shopcart-submit pull-right">
-                            <button type="submit" class="btn">Pay Now</button>
+                            <button type="submit" class="btn" @click="order">Pay Now</button>
                         </div>
                         <div class="checkbox shopcart-total">
                             <div class="pull-right">
@@ -110,6 +110,20 @@
                 for (var i = 0; i < this.list.length; i++) {
                     this.list[i].isCheck = false;
                 }
+            },
+            order() {
+                var ids = "";
+                for (var i = 0; i < this.list.length; i++) {
+                    if (this.list[i].isCheck === true) {
+                        ids += this.list[i].id + ",";
+                    }
+                }
+                ids = ids.substr(0, ids.length - 1);
+                if (ids.length === 0) {
+                    this.$Message.error("Please select at least one product!");
+                    return;
+                }
+                this.$router.push("/order?ids=" + ids);
             },
             chooseCheck(index) {
                 if (this.list[index].isCheck === false) {
