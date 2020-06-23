@@ -47,4 +47,14 @@ export default [
         },
         component: () => import('../views/cart.vue'),
     },
+    {
+        //Order
+        path: '/order',
+        name: 'order',
+        meta: {
+            title: 'Order',
+            auth: 'login'
+        },
+        component: () => import('../views/order.vue'),
+    },
 ]
