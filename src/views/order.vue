@@ -39,7 +39,7 @@
                                     </td>
                                     <td>€<span v-text="v.price"></span></td>
                                     <td v-text="v.num"></td>
-                                    <td>€</td>
+                                    <td>€<span v-text="(v.price*v.num).toFixed(2)"></span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -56,6 +56,7 @@
 
 <script>
     import header_ from '../components/header_'
+    import {cartList} from '../lib/interface'
 
     export default {
         components: {header_},
@@ -72,10 +73,25 @@
             this.ids = this.$route.query.ids;
             if (!this.ids) {
                 this.$router.replace("/");
+                return;
             }
+            this.getCartList();
+            var that = this;
+            $(document).ready(function () {
+                $(this).on('change', 'input', function () {
+                    that.addressId = $(this).parents('.radio-box').attr("val");
+                    $(this).parents('.radio-box').addClass('active').siblings().removeClass('active');
+                })
+            });
+            $('#coupon').bind('change', function () {
+                console.log($(this).val());
+            })
         },
         methods: {
-
+            async getCartList() {
+                let result = await cartList({"id": this.ids});
+                this.cartList = result.result;
+            },
         }
     }
 </script>
