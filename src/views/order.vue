@@ -9,11 +9,14 @@
                     <div class="shop-title">Choose Address</div>
                     <div class="shopcart-form__box">
                         <div class="addr-radio">
-                            <div class="radio-line radio-box">
+                            <div class="radio-line radio-box" :id="'address'+k" :val="v.id"
+                                 v-for="(v,k) in addressList">
                                 <label class="radio-label ep">
-                                    <input name="addr">
+                                    <input name="addr" :value="v.id" autocomplete="off" type="radio" :id="'radio_'+k">
                                     <i class="iconfont icon-radio"></i>
+                                    <span v-text="v.consignee_info"></span>
                                 </label>
+                                <a v-if="v.is_default === 1" class="default">Default address</a>
                             </div>
                         </div>
                         <div class="shop-order__detail">
@@ -56,7 +59,7 @@
 
 <script>
     import header_ from '../components/header_'
-    import {cartList} from '../lib/interface'
+    import {cartList, address} from '../lib/interface'
 
     export default {
         components: {header_},
@@ -76,6 +79,7 @@
                 return;
             }
             this.getCartList();
+            this.getAddress();
             var that = this;
             $(document).ready(function () {
                 $(this).on('change', 'input', function () {
@@ -91,6 +95,17 @@
             async getCartList() {
                 let result = await cartList({"id": this.ids});
                 this.cartList = result.result;
+            },
+            async getAddress() {
+                let result = await address();
+                this.addressList = result.result;
+                if (this.addressList.length > 0) {
+                    this.$nextTick(function () {
+                        $("#address0").addClass("active");
+                        $("#radio_0").attr("checked", 'checked');
+                        this.addressId = this.addressList[0].id;
+                    })
+                }
             },
         }
     }
