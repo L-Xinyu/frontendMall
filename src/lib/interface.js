@@ -41,4 +41,6 @@ export const deleteCart = (data) => post(url + "api/cart/delete", data);
 export const updateCart = (data) => post(url + "api/cart/update", data);
 //Address
 export const address = (data) => get(url + "api/address", data);
+//Post Order
+export const order = (data) => post(url + "api/order", data);
 

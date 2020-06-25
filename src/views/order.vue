@@ -48,7 +48,7 @@
                             </table>
                         </div>
                         <div class="user-form-group shopcart-submit">
-                            <button type="submit" class="btn">Submit Order</button>
+                            <button type="submit" class="btn" @click="pay">Submit Order</button>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
 
 <script>
     import header_ from '../components/header_'
-    import {cartList, address} from '../lib/interface'
+    import {cartList, address, order} from '../lib/interface'
 
     export default {
         components: {header_},
@@ -107,6 +107,18 @@
                     })
                 }
             },
+            async pay() {
+                if (this.addressId === 0) {
+                    this.$Message.error("Please add your address!");
+                    return;
+                }
+                let result = await order({"address_id": this.addressId, "ids": this.ids});
+                if (result.status === 1) {
+                    this.$Message.success(result.message);
+                } else {
+                    this.$Message.error(result.message);
+                }
+            }
         }
     }
 </script>
