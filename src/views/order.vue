@@ -9,10 +9,10 @@
                     <div class="shop-title">Choose Address</div>
                     <div class="shopcart-form__box">
                         <div class="addr-radio">
-                            <div class="radio-line radio-box" :id="'address'+k" :val="v.id"
+                            <div class="radio-line radio-box" :id="'address'+k" :val="v.address_id"
                                  v-for="(v,k) in addressList">
                                 <label class="radio-label ep">
-                                    <input name="addr" :value="v.id" autocomplete="off" type="radio" :id="'radio_'+k">
+                                    <input name="addr" :value="v.address_id" autocomplete="off" type="radio" :id="'radio_'+k">
                                     <i class="iconfont icon-radio"></i>
                                     <span v-text="v.consignee_info"></span>
                                 </label>
@@ -103,7 +103,7 @@
                     this.$nextTick(function () {
                         $("#address0").addClass("active");
                         $("#radio_0").attr("checked", 'checked');
-                        this.addressId = this.addressList[0].id;
+                        this.addressId = this.addressList[0].address_id;
                     })
                 }
             },
@@ -115,6 +115,7 @@
                 let result = await order({"address_id": this.addressId, "ids": this.ids});
                 if (result.status === 1) {
                     this.$Message.success(result.message);
+                    this.$router.push("/pay?id="+result.result.id);
                 } else {
                     this.$Message.error(result.message);
                 }
