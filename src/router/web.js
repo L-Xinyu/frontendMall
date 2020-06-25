@@ -57,4 +57,14 @@ export default [
         },
         component: () => import('../views/order.vue'),
     },
+    {
+        //订单支付
+        path: '/pay',
+        name: 'pay',
+        meta: {
+            title: '订单支付',
+            auth: 'login'
+        },
+        component: () => import('../views/pay.vue'),
+    },
 ]
