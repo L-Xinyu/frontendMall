@@ -58,7 +58,7 @@ export default [
         component: () => import('../views/order.vue'),
     },
     {
-        //订单支付
+        //Order Pay
         path: '/pay',
         name: 'pay',
         meta: {
@@ -67,4 +67,14 @@ export default [
         },
         component: () => import('../views/pay.vue'),
     },
+    {
+        //User Information
+        path: '/mine/set',
+        name: 'mine-set',
+        meta: {
+            title: 'User',
+            auth: 'login'
+        },
+        component: () => import('../views/mine/set.vue'),
+    }
 ]
