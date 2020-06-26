@@ -55,7 +55,7 @@
     import mineLeft from '../../components/mine_left'
     import "@/assets/js/cropper/cropper.min.js"
     import "@/assets/js/cropper/sitelogo.js"
-    import {user} from "../../lib/interface";
+    import {user, updateUser} from "../../lib/interface";
 
     export default {
         components: {header_, footer_, mineLeft},
@@ -78,6 +78,18 @@
                 this.sex = result.result.sex.toString();
                 console.log(result);
             },
+            async ok() {
+                if (this.username === "") {
+                    this.$Message.error('Please enter the username！');
+                    return;
+                }
+                let result = await updateUser({"username": this.username, "sex": this.sex});
+                this.$Message.success(result.message);
+                if (result.status === 1) {
+                    localStorage.setItem("username", this.username);
+                    location.reload();
+                }
+            }
         }
     }
 </script>
