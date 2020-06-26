@@ -55,6 +55,7 @@
     import mineLeft from '../../components/mine_left'
     import "@/assets/js/cropper/cropper.min.js"
     import "@/assets/js/cropper/sitelogo.js"
+    import {user} from "../../lib/interface";
 
     export default {
         components: {header_, footer_, mineLeft},
@@ -68,8 +69,15 @@
         mounted() {
             $("#set").addClass("active");
             $('.to-top').toTop({position: false});
+            this.getUser();
         },
         methods: {
+            async getUser() {
+                let result = await user();
+                this.username = result.result.username;
+                this.sex = result.result.sex.toString();
+                console.log(result);
+            },
         }
     }
 </script>

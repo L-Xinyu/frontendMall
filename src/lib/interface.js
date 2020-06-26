@@ -40,9 +40,11 @@ export const deleteCart = (data) => post(url + "api/cart/delete", data);
 //Update cart data
 export const updateCart = (data) => post(url + "api/cart/update", data);
 //Address
-export const address = (data) => get(url + "api/address", data);
+export const address = (data) => get(url + "api/address/read", data);
 //Post Order
 export const order = (data) => post(url + "api/order", data);
 //Get Order inform
 export const orderInfo = (data) => get(url + "api/order/" + data.id);
+//Get User Information
+export const user = (data) => get(url + "api/user", data);
 
