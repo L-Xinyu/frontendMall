@@ -76,5 +76,15 @@ export default [
             auth: 'login'
         },
         component: () => import('../views/mine/set.vue'),
-    }
+    },
+    {
+        //User Address
+        path: '/mine/address',
+        name: 'mine-address',
+        meta: {
+            title: 'User Address',
+            auth: 'login'
+        },
+        component: () => import('../views/mine/address.vue'),
+    },
 ]
