@@ -27,6 +27,8 @@ export const banner = (data) => get(url + "api/index/getRotationChart", data);
 export const goodsRecommend = (data) => get(url + "api/index/cagegoryGoodsRecommend", data);
 //Category classification list
 export const categorySearch = (data) => get(url + "api/category/search/" + data.id);
+//Get category sku
+export const sku = (data) => get(url + "api/sku", data);
 //Category and goods list
 export const lists = (data) => get(url + "api/lists", data);
 //Add Shopping Cart

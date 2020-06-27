@@ -19,6 +19,43 @@
         </div>
         <div class="content inner">
             <section class="filter-section clearfix">
+                <ol class="breadcrumb">
+                    <li>INDEX</li>
+                    <li>Products screening</li>
+                    <li class="active" v-text="topCateName"></li>
+                </ol>
+                <div class="filter-box">
+                    <div class="filter-prop-item">
+                        <span class="filter-prop-title">Secondary classification：</span>
+                        <ul class="clearfix">
+                            <a>
+                                <li class="cate2" :id="'cate2_'+k" @click="changeCate2(k)"
+                                    v-for="(v,k) in categoryInfo2" :key="k" v-text="v.name"></li>
+                            </a>
+                        </ul>
+                    </div>
+                    <div class="filter-prop-item">
+                        <span class="filter-prop-title">Tertiary classification：</span>
+                        <ul class="clearfix">
+                            <a>
+                                <li class="cate3" :id="'cate3_'+k" @click="changeCate3(k)"
+                                    v-for="(v,k) in categoryInfo3" :key="k" v-text="v.name"></li>
+                            </a>
+                        </ul>
+                    </div>
+                    <div class="filter-prop-item hide" v-for="(v,k) in skuInfo">
+                        <span class="filter-prop-title" v-text="v.name+'：'"></span>
+                        <ul class="clearfix">
+                            <a>
+                                <li :class="'active '+'sku_'+k" :id="'sku_'+k+'_-1'" @click="changeSku(k,-1)">Total</li>
+                            </a>
+                            <a v-for="(v1,k1) in v.list">
+                                <li :class="'sku_'+k" :id="'sku_'+k+'_'+k1" v-text="v1.name"
+                                    @click="changeSku(k,k1)"></li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
                 <div class="sort-box bgf5">
                     <div class="sort-text">Sort by:</div>
                     <div class="sort-text" id="orderNum" @click="changeOrderNum">Sales <i id="orderNumIcon"
@@ -75,7 +112,7 @@
     import header_ from '../components/header_'
     import search from '../components/search'
     import footer_ from '../components/footer_'
-    import {categorySearch, lists, addCart} from "../lib/interface";
+    import {sku, categorySearch, lists, addCart} from "../lib/interface";
 
     export default {
         name: "category",
@@ -87,11 +124,17 @@
                 "color": -1,
                 "size": -1,
                 "price": -1,
+                "cate2": -1,
+                "cate3": -1,
                 "orderType": -1,
                 "orderNum": -1,
                 "orderPrice": -1,
 
                 "topCateName": "",
+                "categoryInfo": [],
+                "categoryInfo2": [],
+                "categoryInfo3": [],
+                "cate": [],
 
                 "pageSize": 10,
                 "pageNum": 1,
@@ -108,16 +151,91 @@
             this.getCategorySearch();
         },
         methods: {
+            async getSku() {
+                let result = await sku({"category_id": this.cid});
+                this.skuInfo = result.result;
+            },
             async getCategorySearch() {
                 let result = await categorySearch({"id": this.cid});
                 this.topCateName = result.result.name;
                 this.cate = result.result.focus_ids;
                 this.categoryInfo = result.result.list;
+                this.categoryInfo2 = this.categoryInfo[0];
+                this.categoryInfo3 = this.categoryInfo[1];
 
                 this.$nextTick(function () {
+                    if (this.cate.length >= 1) {
+                        for (var i = 0; i < this.categoryInfo[0].length; i++) {
+                            if (this.categoryInfo[0][i].id === this.cate[0]) {
+                                this.cate2 = this.categoryInfo[0][i].id;
+                                $(".cate2").removeClass("active");
+                                $("#cate2_" + i).addClass("active");
+                            }
+                        }
+                    }
+                    if (this.cate.length > 1) {
+                        for (var i = 0; i < this.categoryInfo[1].length; i++) {
+                            if (this.categoryInfo[1][i].id === this.cate[1]) {
+                                this.cate3 = this.categoryInfo[1][i].id;
+                                $(".cate3").removeClass("active");
+                                $("#cate3_" + i).addClass("active");
+                            }
+                        }
+                    }
                     this.getResult();
                 });
             },
+
+            changeSku(k, k1) {
+                $(".sku_" + k).removeClass("active");
+                $("#sku_" + k + "_" + k1).addClass("active");
+                if (k === 0) {
+                    if (k1 === -1) {
+                        this.color = -1
+                    } else {
+                        this.color = this.skuInfo[k].list[k1].id
+                    }
+                } else if (k === 1) {
+                    if (k1 === -1) {
+                        this.size = -1
+                    } else {
+                        this.size = this.skuInfo[k].list[k1].id
+                    }
+                } else {
+                    if (k1 === -1) {
+                        this.price = -1
+                    } else {
+                        this.price = this.skuInfo[k].list[k1].id
+                    }
+                }
+                this.pageNum = 1;
+                this.getResult();
+            },
+            changeCate2(k) {
+                if (k === -1) {
+                    this.cate2 = -1;
+                } else {
+                    this.cate2 = this.categoryInfo[0][k].id;
+                    this.cid = this.cate2;
+                }
+                $(".cate2").removeClass("active");
+                $("#cate2_" + k).addClass("active");
+                this.pageNum = 1;
+                this.getResult();
+            },
+            changeCate3(k) {
+                if (k === -1) {
+                    this.cate3 = -1;
+                } else {
+                    this.cate3 = this.categoryInfo3[k].id;
+                    this.cid = this.cate3;
+                }
+                $(".cate3").removeClass("active");
+                $("#cate3_" + k).addClass("active");
+                this.pageNum = 1;
+                this.getResult();
+            },
+
             changeOrderNum() {
                 this.orderType = 0;
                 if (this.orderNum === -1) {
