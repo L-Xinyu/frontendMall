@@ -5,7 +5,13 @@
         <div class="content clearfix bgf5">
             <section class="user-center inner clearfix">
                 <div class="user-content__box clearfix bgf">
+                    <div class="shop-title">Address</div>
                     <div class="shopcart-form__box">
+                        <div class="addr-radio">
+                            <div class="radio-line  active">
+                                <label class="radio-label ep" v-text="orderInfo.consignee_info"></label>
+                            </div>
+                        </div>
                         <div class="shop-order__detail">
                             <table class="table">
                                 <thead>
@@ -18,32 +24,33 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr v-for="(v,k) in orderInfo.malls">
                                     <th scope="row"><a>
                                         <div class="img">
-                                            <img alt="" style="width: 100px;height: 100px;" class="cover">
+                                            <img :src="v.image" alt="" style="width: 100px;height: 100px;" class="cover">
                                         </div>
                                     </a></th>
                                     <td>
-                                        <div class="name ep3"></div>
-                                        <div class="type c9"></div>
+                                        <div class="name ep3" v-text="v.title"></div>
+                                        <div class="type c9" v-text="v.sku"></div>
                                     </td>
-                                    <td>€<span v-text=""></span></td>
-                                    <td v-text=""></td>
-                                    <td>€<span v-text=""></span></td>
+                                    <td>¥<span v-text="v.price"></span></td>
+                                    <td v-text="v.num"></td>
+                                    <td>¥<span v-text="(v.price*v.num).toFixed(2)"></span></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="shop-cart__info clearfix">
                             <div class="pull-left text-left">
-                                <div class="info-line text-nowrap">Pay Time：<span class="c6"></span>
+                                <div class="info-line text-nowrap">Pay Time：<span class="c6"
+                                                                              v-text="orderInfo.create_time"></span>
                                 </div>
-                                <div class="info-line text-nowrap">OrderId：<span class="c6"></span>
+                                <div class="info-line text-nowrap">OrderId：<span class="c6" v-text="orderInfo.id"></span>
                                 </div>
                             </div>
                             <div class="pull-right text-right">
-                                <div class="info-line">Total：<b class="fz18 cr">€</b>
+                                <div class="info-line">Total：<b class="fz18 cr">¥<span v-text="orderInfo.total_price"></span></b>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +79,7 @@
                     <p slot="header" style="color:#f60;text-align:center">
                         <span>Please Use Wechat</span>
                     </p>
-                    <p style="color: #f60;text-align: center;">Pay Price：€<span></span></p>
+                    <p style="color: #f60;text-align: center;">Pay Price：€<span v-text="orderInfo.total_price"></span></p>
                     <div id="qrcode" style="margin-top: 10px;margin:0 auto;">
                         <img :src="wxCode" width="100%"/>
                     </div>
@@ -87,6 +94,7 @@
 
 <script>
     import header_ from '../components/header_'
+    import {orderInfo} from "../lib/interface";
 
     export default {
         components: {header_},
@@ -95,6 +103,7 @@
             return {
                 "modalPay": false,
                 "id": 0,
+                "orderInfo": {},
             }
         },
         mounted() {
@@ -103,8 +112,18 @@
                 this.$router.replace("/");
                 return;
             }
+            this.getOrderInfo();
         },
         methods: {
+            async getOrderInfo() {
+                let result = await orderInfo({"id": this.id});
+                if (result.status !== 1) {
+                    this.$router.replace("/");
+                    return;
+                }
+                this.orderInfo = result.result;
+
+            },
         }
     }
 </script>
