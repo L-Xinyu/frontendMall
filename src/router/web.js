@@ -9,6 +9,15 @@ export default [
         component: () => import('../views/login.vue'),
     },
     {
+        //Register
+        path: '/reg',
+        name: 'reg',
+        meta: {
+            title: 'register',
+        },
+        component: () => import('../views/reg.vue'),
+    },
+    {
         //Index
         path: '/',
         name: 'index',
