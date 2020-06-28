@@ -123,7 +123,7 @@
                     "password": this.password}
                     );
                 if (result.status === 1) {
-                    this.$router.replace("/login");
+                    this.$router.replace("/auth/login");
                 } else {
                     this.$Message.error(result.message);
                     return;
