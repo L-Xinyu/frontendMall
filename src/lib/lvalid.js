@@ -56,6 +56,12 @@ class lvalid{
         return rename.test(username);
     }
 
+    /* username length 6-16*/
+    static isPassword(password) {
+        let  regex = /^[0-9A-Za-z_]{6,16}$/;
+        return regex.test(password);
+    }
+
     static isNumber(str) {
         let  regu = /^[-]{0,1}[0-9]{1,}$/;
         return regu.test(str);

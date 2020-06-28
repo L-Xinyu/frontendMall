@@ -79,6 +79,7 @@
 </template>
 
 <script>
+    import lvaild from '../lib/lvalid'
     import footer_ from '../components/footer_'
     import {reg} from "../lib/interface";
 
@@ -105,16 +106,16 @@
         },
         methods: {
             async reg() {
-                if (this.phone === "") {
-                    this.$Message.error('Please enter your mobile！');
+                if (this.phone === "" || !lvaild.checkMobile(this.phone)) {
+                    this.$Message.error('Mobile phone number format is incorrect！');
                     return;
                 }
-                if (this.username === "") {
-                    this.$Message.error('Please enter your username！');
+                if (this.username === "" || !lvaild.isUsername(this.username)) {
+                    this.$Message.error('Username should contain letters and numbers!');
                     return;
                 }
-                if (this.password === "") {
-                    this.$Message.error('Please enter the password！');
+                if (this.password === "" || !lvaild.isPassword(this.password)) {
+                    this.$Message.error('Password length should between 6-16 digits!');
                     return;
                 }
                 let result = await reg({
@@ -123,7 +124,7 @@
                     "password": this.password}
                     );
                 if (result.status === 1) {
-                    this.$router.replace("/auth/login");
+                    this.$router.replace("/login");
                 } else {
                     this.$Message.error(result.message);
                     return;

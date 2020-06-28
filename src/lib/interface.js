@@ -16,7 +16,7 @@ export const smscode = (data) => post(url + "api/auth/smscode", data);
 //Login
 export const login = (data) => post(url + "api/auth/login", data);
 //Register
-export const reg = (data) => post(url + "api/user/register", data);
+export const reg = (data) => post(url + "api/auth/register", data);
 //Logout api
 export const logout = (data) => post(url + "api/user/logout", data);
 //Count ShoppingCart api
