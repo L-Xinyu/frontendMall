@@ -66,7 +66,7 @@
                                 <div class="buts-box">
                                     <a role="button" href="/"
                                        class="btn btn-block btn-lg btn-default">Continue to visit</a>
-                                    <a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">Login VIP Center</a>
+                                    <a role="button" href="/" class="btn btn-block btn-lg btn-info">Enter to my account</a>
                                 </div>
                             </div>
                         </div>
