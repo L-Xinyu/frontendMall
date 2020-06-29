@@ -16,7 +16,7 @@
                 <mine-left></mine-left>
                 <div class="pull-right">
                     <div class="user-content__box clearfix bgf">
-                        <div class="title">Account Information-Delivery Address</div>
+                        <div class="title">Account Information->Delivery Address</div>
                         <form action="" class="user-addr__form form-horizontal" role="form">
                             <p class="fz18 cr">Add New Address
                                 <span class="c6" style="margin-left: 20px">

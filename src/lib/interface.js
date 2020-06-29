@@ -51,6 +51,8 @@ export const address = (data) => get(url + "api/address/read", data);
 export const order = (data) => post(url + "api/order", data);
 //Get Order inform
 export const orderInfo = (data) => get(url + "api/order/" + data.id);
+//Ger user all Orders
+export const orderList = (data) => get(url + "api/order/all", data);
 //Get User Information
 export const user = (data) => get(url + "api/user", data);
 //Update User

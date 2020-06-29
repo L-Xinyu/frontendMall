@@ -96,4 +96,15 @@ export default [
         },
         component: () => import('../views/mine/address.vue'),
     },
+    {
+        //My Order
+        path: '/mine/order',
+        name: 'mine-order',
+        meta: {
+            title: 'My order',
+            auth: 'login'
+        },
+        component: () => import('../views/mine/order.vue'),
+    }
+    ,
 ]
