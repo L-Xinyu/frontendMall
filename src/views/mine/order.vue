@@ -28,24 +28,21 @@
                                     <div role="tabpanel" class="tab-pane fade in active" id="all">
                                         <table class="table text-center">
                                             <tr>
-                                                <th width="380">Order ID</th>
-                                                <th width="85">Total Price</th>
+                                                <th width="280">Order ID</th>
+                                                <th width="120">Total Price</th>
                                                 <th width="120">Create Time</th>
                                                 <th width="120">Pay Status</th>
-                                                <th width="120">Operation</th>
                                             </tr>
-                                            <tr class="order-item">
+                                            <tr class="order-item" v-for="v in orderInfo">
                                                 <td style="height: 100%;">
-                                                    <label>
-                                                        <router-link class="num">
-                                                         ID: <span></span>
-                                                        </router-link>
-                                                    </label>
+                                                    ID: <span v-text="v.order_id"></span>
                                                 </td>
-                                                <td>€<span></span></td>
-                                                <td></td>
+                                                <td>
+                                                    €<span v-text="v.total_price"></span>
+                                                </td>
+                                                <td v-text="v.create_time"></td>
                                                 <td class="state">
-                                                    <a class="but c6"></a>
+                                                    <a class="but c6" v-text="v.pay_type"></a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -70,6 +67,7 @@
     import header_ from '../../components/header_'
     import footer_ from '../../components/footer_'
     import mineLeft from '../../components/mine_left'
+    import {orderList} from '../../lib/interface'
 
     export default {
         components: {header_, footer_, mineLeft},
@@ -86,6 +84,7 @@
         mounted() {
             $('.to-top').toTop({position: false});
             $("#order").addClass("active");
+            this.getOrderInfo();
         },
         methods: {
             async pageSizeChange(pageSize) {
@@ -95,6 +94,20 @@
             changePage(page) {
                 this.pageNum = page;
                 this.getOrderInfo()
+            },
+            async getOrderInfo() {
+                var data = {
+                    "page": this.pageNum,
+                    "page_size": this.pageSize,
+                };
+                if (this.status !== -1) {
+                    data.type = this.status;
+                } else {
+                    delete (data["type"])
+                }
+                let result = await orderList(data);
+                //this.total = result.result.count;
+                this.orderInfo = result.result.list;
             },
         }
     }
