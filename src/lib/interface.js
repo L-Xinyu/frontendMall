@@ -20,7 +20,7 @@ export const reg = (data) => post(url + "api/auth/register", data);
 //Logout api
 export const logout = (data) => post(url + "api/user/logout", data);
 //Count ShoppingCart api
-export const cartCount = (data) => post(url + "api/mall.init", data);
+export const cartCount = (data) => post(url + "api/mall/init", data);
 //Index category
 export const category = (data) => get(url + "api/category", data);
 //Index banner
@@ -32,11 +32,13 @@ export const categorySearch = (data) => get(url + "api/category/search/" + data.
 //Get category sku
 export const sku = (data) => get(url + "api/sku", data);
 //Category and goods list
-export const lists = (data) => get(url + "api/lists", data);
+export const lists = (data) => get(url + "api/mall/lists", data);
+//Good Detail
+export const detail = (data) => get(url + "api/mall/detail/" + data.id);
+//New Goods Recommend
+export const recommend = (data) => get(url + "api/mall/recommend",data);
 //Add Shopping Cart
 export const addCart = (data) => post(url + "api/cart/add", data);
-//Good Detail
-export const detail = (data) => get(url + "api/detail/" + data.id);
 //ShoppingCart list
 export const cartList = (data) => get(url + "api/cart/lists", data);
 //Delete Cart goods

@@ -163,6 +163,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="pull-right">
+                    <div class="tab-content" id="descCate">
+                        <div role="tabpanel" class="tab-pane fade in active" id="detail-tab"
+                             aria-labelledby="detail-tab">
+                            <div class="descCate-content bgf5">
+                                <dd class="dc-idsItem selected">
+                                    <a><i class="iconfont icon-dot"></i> Goods Image</a>
+                                </dd>
+                                <dd class="dc-idsItem">
+                                    <a><i class="iconfont icon-selected"></i> Detail Image</a>
+                                </dd>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
         <footer_></footer_>
@@ -176,7 +191,7 @@
     import header_ from '../components/header_'
     import search from '../components/search'
     import footer_ from '../components/footer_'
-    import {detail, addCart} from "../lib/interface";
+    import {detail, recommend, addCart} from "../lib/interface";
 
     export default {
         components: {header_, search, footer_},
@@ -198,6 +213,7 @@
         mounted() {
             this.id = this.$route.query.id;
             this.getResult();
+            this.getRecommendInfo();
 
             $('#descCate').smartFloat(0);
             $('.dc-idsItem').click(function () {
@@ -291,6 +307,10 @@
                 }
                 let result = await addCart({"id": this.id, "num": num});
                 this.$Message.success(result.message);
+            },
+            async getRecommendInfo() {
+                let result = await recommend();
+                this.recommend = result.result;
             },
             changeImg(img) {
                 this.firstImg = img;
