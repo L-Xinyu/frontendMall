@@ -2,6 +2,15 @@
     <div>
         <!-- Top tab -->
         <header_></header_>
+        <div class="bgf5 clearfix">
+            <div class="top-user">
+                <div class="inner">
+                    <router-link class="logo" to="/"><img src="@/assets/images/icons/logo.png" alt="TP6" class="cover">
+                    </router-link>
+                    <div class="title">Submit Order</div>
+                </div>
+            </div>
+        </div>
         <!-- Top Title -->
         <div class="content clearfix bgf5">
             <section class="user-center inner clearfix">
@@ -54,15 +63,17 @@
                 </div>
             </section>
         </div>
+        <footer_></footer_>
     </div>
 </template>
 
 <script>
     import header_ from '../components/header_'
+    import footer_ from '../components/footer_'
     import {cartList, address, order} from '../lib/interface'
 
     export default {
-        components: {header_},
+        components: {header_,footer_},
         name: "order",
         data() {
             return {

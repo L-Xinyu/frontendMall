@@ -51,6 +51,7 @@
                                     type="button" @click="login">Login
                             </button>
                             <br>
+                                <router-link to="/reg" class="pull-right fz16">New User Registration</router-link>
                         </form>
                         <div class="tabs_div">
                             <div class="success-box">

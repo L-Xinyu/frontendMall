@@ -21,7 +21,7 @@ export const logout = (data) => post(url + "api/user/logout", data);
 //Count ShoppingCart api
 export const cartCount = (data) => post(url + "api/mall/init", data);
 //Category and goods list
-export const lists = (data) => get(url + "api/mall/lists", data);
+export const lists = (data) => post(url + "api/mall/lists", data);
 //Good Detail
 export const detail = (data) => get(url + "api/mall/detail/" + data.id);
 //New Goods Recommend

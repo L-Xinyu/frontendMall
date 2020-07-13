@@ -510,41 +510,6 @@ body {
     margin-bottom: 0;
 }
 
-.verify-qq {
-    height: 80px;
-    border: 1px solid #ececec;
-    border-top: 0;
-    padding: 10px;
-}
-
-.verify-qq .title {
-    font-size: 0;
-    line-height: 24px;
-    text-align: center;
-}
-
-.verify-qq .fake {
-    width: 16px;
-    height: 16px;
-    margin-top: -8px;
-    margin-right: 5px;
-    vertical-align: middle;
-    display: inline-block;
-    background-image: url(../images/icons/fake.png);
-    -webkit-background-size: 100%;
-    background-size: 100%;
-}
-
-.verify-qq .input-group {
-    line-height: 24px;
-}
-
-.verify-qq .form-control, .verify-qq .btn {
-    height: 28px;
-    font-size: 12px;
-    padding: 0 12px;
-}
-
 .user-info__box > .tags {
     height: 80px;
 }
@@ -854,37 +819,6 @@ body {
     background-position: center;
 }
 
-.scroll-floor .but-div:nth-child(1) .but-icon {
-    background-image: url(../images/icons/but_1.png)
-}
-
-.scroll-floor .but-div:nth-child(2) .but-icon {
-    background-image: url(../images/icons/but_2.png)
-}
-
-.scroll-floor .but-div:nth-child(3) .but-icon {
-    background-image: url(../images/icons/but_3.png)
-}
-
-.scroll-floor .but-div:nth-child(4) .but-icon {
-    background-image: url(../images/icons/but_4.png)
-}
-
-.scroll-floor .but-div:nth-child(1) > a:hover .but-icon {
-    background-image: url(../images/icons/but_hover_1.png)
-}
-
-.scroll-floor .but-div:nth-child(2) > a:hover .but-icon {
-    background-image: url(../images/icons/but_hover_2.png)
-}
-
-.scroll-floor .but-div:nth-child(3) > a:hover .but-icon {
-    background-image: url(../images/icons/but_hover_3.png)
-}
-
-.scroll-floor .but-div:nth-child(4) > a:hover .but-icon {
-    background-image: url(../images/icons/but_hover_4.png)
-}
 
 .scroll-floor .but-div > a:hover {
     color: #fff
@@ -1340,23 +1274,6 @@ body {
     float: right;
     background-color: #b31e22;
     border: 1px solid #b31e22;
-}
-
-.lace-title {
-    display: block;
-    width: 180px;
-    height: 20px;
-    overflow: hidden;
-    position: absolute;
-    left: 50%;
-    margin-left: -90px;
-    background-image: url(../images/icons/lace-title_1.png);
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.lace-title.type-2 {
-    background-image: url(../images/icons/lace-title_2.png);
 }
 
 .lace-title span {
@@ -3289,14 +3206,6 @@ img.zoom-img {
     height: 80px;
     bottom: 50px;
     right: 20px;
-}
-
-#used .coupon::after {
-    background-image: url(../images/icons/coupon_used.png)
-}
-
-#overdue .coupon::after {
-    background-image: url(../images/icons/coupon_overdue.png)
 }
 
 .modify_div {
